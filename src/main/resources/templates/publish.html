@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/community.css"/>
+	<script type="text/javascript" src="/js/community.js"></script>
+<!--	<script type="text/javascript">-->
+<!--		$(function(){-->
+<!--			showSelectTag();-->
+<!--		});-->
+<!--	</script>-->
 </head>
 <body>
 <div th:insert="~{navigation.html :: nav}"></div>
@@ -23,15 +29,37 @@
 				<input type="hidden" name="id" th:value="${id}">
 				<div class="form-group">
  					<label for="title">问题标题(简单扼要):</label>
- 					<input type="text" class="form-control" th:value="${title}" name="title" id="title" placeholder="实体标题......">
+ 					<input type="text" class="form-control" th:value="${title}" name="title" id="title" placeholder="实体标题......" autocomplete="off">
 				</div>
 				<div class="form-group">
  					<label for="title">问题补充(必填，请按照右侧提示):</label>
- 					<textarea name="description" id="description" th:text="${description}" class="form-control" cols="30" rows="10"></textarea>
+ 					<textarea name="description" id="description" th:text="${description}" class="form-control" cols="30" rows="10" autocomplete="off"></textarea>
 				</div>
 				<div class="form-group">
  					<label for="title">添加标签:</label>
-					<input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="输入标签，以逗号分隔">
+					<input type="text" class="form-control" th:value="${tag}" name="tag" id="tag" placeholder="输入标签，以逗号分隔" autocomplete="off">
+					<div id="select-tag" class="publish-tag-tab">
+						<ul class="nav nav-tabs" role="tablist">
+							<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">编程语言</a></li>
+							<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">编程框架</a></li>
+						</ul>
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="home">
+								<span class="label label-info">
+									<span class="glyphicon glyphicon-tags" onclick="selectTag('Spring')">
+										Spring
+									</span>
+								</span>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="profile">
+								<span class="label label-info">
+									<span class="glyphicon glyphicon-tags" onclick="selectTag('Java')">
+										Java
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="container-fluid main">
 					<div class="row">

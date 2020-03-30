@@ -1,12 +1,15 @@
 package com.nextArt.community.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.nextArt.community.exception.CustomizeErrorCode;
 import com.nextArt.community.exception.CustomizeException;
 import com.nextArt.community.mapper.QuestionExtMapper;
 import com.nextArt.community.model.QuestionExample;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +54,10 @@ public class QuestionService {
 		}
 		//分页公式，每一页展示5条数据
 		Integer offSet = size*(page-1);
-		List<Question> questions = questionMapper.selectByExampleWithRowbounds(new QuestionExample(),new RowBounds(offSet,size));
+		QuestionExample questionExample = new QuestionExample();
+		//倒序
+		questionExample.setOrderByClause("gmt_create desc");
+		List<Question> questions = questionMapper.selectByExampleWithRowbounds(questionExample,new RowBounds(offSet,size));
 		List<QuestionDTO> questionDTOList = new ArrayList<QuestionDTO>();
 		
 		for (Question question:questions) {
@@ -151,4 +157,24 @@ public class QuestionService {
 		question.setViewCount(1);
 		questionExtMapper.incView(question);
 	}
+
+    public List<QuestionDTO> selectRelated(QuestionDTO queryDTO) {
+		if (StringUtils.isBlank(queryDTO.getTag())){
+			return new ArrayList<>();
+		}else {
+			String[] tags = StringUtils.split(queryDTO.getTag(),",");
+			String regexpTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+			Question question = new Question();
+			question.setId(queryDTO.getId());
+			question.setTag(regexpTag);
+
+			List<Question> questions = questionExtMapper.selectRelated(question);
+			List<QuestionDTO> questionDTOS = questions.stream().map(q ->{
+				QuestionDTO questionDTO  = new QuestionDTO();
+				BeanUtils.copyProperties(q ,questionDTO);
+				return questionDTO;
+			}).collect(Collectors.toList());
+			return questionDTOS;
+		}
+    }
 }

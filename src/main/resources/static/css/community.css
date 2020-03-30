@@ -93,3 +93,16 @@ body{
 .question-title{
 	margin-top: 25px;
 }
+.question-tag{
+	margin-right: 5px;
+}
+.question-related{
+	line-height: 20px;
+	font-size: 14px;
+	list-style: none;
+	padding-left: 0px;
+}
+.publish-tag-tab{
+	/*display: none;*/
+	margin-top: 10px;
+}
