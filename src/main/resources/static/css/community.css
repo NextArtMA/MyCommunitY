@@ -108,7 +108,9 @@ body{
 	padding-top: 10px;
 }
 .publish-tag-tab .label-info{
-	margin-right: 10px;
+	white-space: normal;
+	margin: 5px 5px;
+	display: inline-block;
 }
 .publish-tag-tab .tab-content{
 	margin-top: 10px;
