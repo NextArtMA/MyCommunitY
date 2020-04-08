@@ -3,17 +3,29 @@
 <head>
     <title>发布————社区</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="/css/community.css"/>
-	<script type="text/javascript" src="/js/community.js"></script>
-<!--	<script type="text/javascript">-->
-<!--		$(function(){-->
-<!--			showSelectTag();-->
-<!--		});-->
-<!--	</script>-->
+	<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" href="/css/community.css"/>
+	<link rel="stylesheet" href="/css/editormd.min.css"/>
+    <script src="/js/jquery-3.4.1.min.js"></script>
+	<script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script type="application/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="application/javascript" src="/js/community.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			var editor = editormd("question-editor", {
+				width  : "100%",
+				height : 350,
+				path   : "/js/lib/",
+				delay:0,
+				watch:false,
+				placeholder:"请输入问题描述",
+				imageUpload    : true,
+				imageFormats   : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+				imageUploadURL : "/file/upload"
+			});
+		});
+	</script>
 </head>
 <body>
 <div th:insert="~{navigation.html :: nav}"></div>
@@ -31,9 +43,11 @@
  					<label for="title">问题标题(简单扼要):</label>
  					<input type="text" class="form-control" th:value="${title}" name="title" id="title" placeholder="实体标题......" autocomplete="off">
 				</div>
-				<div class="form-group">
+				<div class="form-group" id="question-editor">
  					<label for="title">问题补充(必填，请按照右侧提示):</label>
- 					<textarea name="description" id="description" th:text="${description}" class="form-control" cols="30" rows="10" autocomplete="off"></textarea>
+ 					<textarea name="description" id="description" th:text="${description}"
+							  class="form-control" cols="30" rows="10" autocomplete="off"
+							  style="display: none"></textarea>
 				</div>
 				<div class="form-group">
  					<label for="title">添加标签:</label>
